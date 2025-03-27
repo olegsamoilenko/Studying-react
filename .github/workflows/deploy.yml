@@ -23,6 +23,12 @@ jobs:
       - name: Build React app
         run: npm run build
 
+      - name: Debug SSH key (TEMP)
+        run: |
+          echo "🔑 SSH KEY START"
+          echo "${{ secrets.SERVER_KEY }}" | head -n 5
+          echo "🔑 SSH KEY END"
+
       - name: Copy build to server
         uses: appleboy/scp-action@v0.1.2
         with:
