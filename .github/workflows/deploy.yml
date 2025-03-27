@@ -28,6 +28,10 @@ jobs:
           echo "${{ secrets.SERVER_KEY_BASE64 }}" | base64 -d > private_key
           chmod 600 private_key
 
+      - name: Show decoded SSH key (5 перших рядків)
+        run: |
+          echo "${{ secrets.SERVER_KEY_BASE64 }}" | base64 -d | head -n 5
+
       - name: Copy build to server (using decoded key)
         uses: appleboy/scp-action@v0.1.2
         with:
