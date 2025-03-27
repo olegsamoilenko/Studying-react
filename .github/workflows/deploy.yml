@@ -30,4 +30,4 @@ jobs:
           username: ${{ secrets.SERVER_USER }}
           key: ${{ secrets.SERVER_KEY }}
           source: "build/"
-          target: "/var/www/my-app"
+          target: "/var/www/studing-react"
