@@ -23,12 +23,12 @@ jobs:
       - name: Build React app
         run: npm run build
 
-      - name: Write SSH key to file
+      - name: Decode SSH key
         run: |
-          echo "${{ secrets.SERVER_KEY }}" > private_key
+          echo "${{ secrets.SERVER_KEY_BASE64 }}" | base64 -d > private_key
           chmod 600 private_key
 
-      - name: Copy build to server (via key file)
+      - name: Copy build to server (using decoded key)
         uses: appleboy/scp-action@v0.1.2
         with:
           host: ${{ secrets.SERVER_HOST }}
