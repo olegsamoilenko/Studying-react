@@ -1,36 +1,36 @@
-name: Deploy React to DigitalOcean
-
-on:
-  push:
-    branches: [ main ]
-
-jobs:
-  deploy:
-    runs-on: ubuntu-latest
-
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v3
-
-      - name: Setup Node.js
-        uses: actions/setup-node@v3
-        with:
-          node-version: 18
-
-      - name: Install dependencies
-        run: npm ci
-
-      - name: Build React app
-        run: npm run build
-
-      - name: Decode SSH key
-        run: |
-          echo "${{ secrets.SERVER_KEY_BASE64 }}" | base64 -d > private_key
-          chmod 600 private_key
-          mkdir -p ~/.ssh
-          touch ~/.ssh/known_hosts
-          ssh-keyscan -H ${{ secrets.SERVER_HOST }} >> ~/.ssh/known_hosts
-
-      - name: Upload build via scp
-        run: |
-          scp -i private_key -r build/* ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_HOST }}:/var/www/studing-react
+#name: Deploy React to DigitalOcean
+#
+#on:
+#  push:
+#    branches: [ main ]
+#
+#jobs:
+#  deploy:
+#    runs-on: ubuntu-latest
+#
+#    steps:
+#      - name: Checkout code
+#        uses: actions/checkout@v3
+#
+#      - name: Setup Node.js
+#        uses: actions/setup-node@v3
+#        with:
+#          node-version: 18
+#
+#      - name: Install dependencies
+#        run: npm ci
+#
+#      - name: Build React app
+#        run: npm run build
+#
+#      - name: Decode SSH key
+#        run: |
+#          echo "${{ secrets.SERVER_KEY_BASE64 }}" | base64 -d > private_key
+#          chmod 600 private_key
+#          mkdir -p ~/.ssh
+#          touch ~/.ssh/known_hosts
+#          ssh-keyscan -H ${{ secrets.SERVER_HOST }} >> ~/.ssh/known_hosts
+#
+#      - name: Upload build via scp
+#        run: |
+#          scp -i private_key -r build/* ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_HOST }}:/var/www/studing-react
